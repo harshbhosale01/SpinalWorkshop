@@ -10,18 +10,18 @@ case class WavePlayerGenerics(
                                sampleCountLog2 : Int,
                                phaseWidth : Int,
                                filterCoefWidth : Int
-                             ){
+                             ) {
   def Sample = UInt(sampleWidth bits)
   def sampleCount = 1 << sampleCountLog2
 }
 
 
 
-case class WavePlayer(generics : WavePlayerGenerics) extends Area{
+case class WavePlayer(generics : WavePlayerGenerics) extends Area {
   import generics._
   assert(phaseWidth >= sampleCountLog2)
 
-  val phase = new Area{
+  val phase = new Area {
     val run = Bool
     val rate = UInt(phaseWidth bits)
 
@@ -31,8 +31,8 @@ case class WavePlayer(generics : WavePlayerGenerics) extends Area{
     }
   }
 
-  val sampler = new Area{
-    val romSamples = for(sampleId <- 0 until sampleCount)yield{
+  val sampler = new Area {
+    val romSamples = for(sampleId <- 0 until sampleCount) yield {
       val sin = Math.sin(2.0*Math.PI*sampleId/sampleCount)
       val normalizedSin = (0.5*sin + 0.5) * (Math.pow(2.0, sampleWidth) - 1)
       BigInt(normalizedSin.toLong)
@@ -41,7 +41,7 @@ case class WavePlayer(generics : WavePlayerGenerics) extends Area{
     val sample = rom.readAsync(phase.value >> (phaseWidth - sampleCountLog2))
   }
 
-  val filter = new Area{
+  val filter = new Area {
     val bypass = Bool
     val coef = UInt(filterCoefWidth bits)
     val accumulator = Reg(UInt(sampleWidth + filterCoefWidth bits)) init(0)
@@ -53,7 +53,7 @@ case class WavePlayer(generics : WavePlayerGenerics) extends Area{
 
 
 
-class WavePlayerMapper(bus : BusSlaveFactory, wavePlayer : WavePlayer) extends Area{
+class WavePlayerMapper(bus : BusSlaveFactory, wavePlayer : WavePlayer) extends Area {
   bus.driveAndRead(wavePlayer.phase.run,  address = 0x00) init(False)
   bus.drive(wavePlayer.phase.rate, address = 0x04)
   bus.read(wavePlayer.phase.value, address = 0x08)
@@ -61,6 +61,6 @@ class WavePlayerMapper(bus : BusSlaveFactory, wavePlayer : WavePlayer) extends A
   bus.driveAndRead(wavePlayer.filter.bypass, address = 0x10) init(True)
   bus.drive(wavePlayer.filter.coef, address = 0x14) init(0)
 
-  //  Could be used to make the ram writable by the BusSlaveFactory
-  //  bus.writeMemWordAligned(wavePlayer.sampler.ram, addressOffset = wavePlayer.generics.sampleCount)
+  // Could be used to make the ram writable by the BusSlaveFactory
+  // bus.writeMemWordAligned(wavePlayer.sampler.ram, addressOffset = wavePlayer.generics.sampleCount)
 }

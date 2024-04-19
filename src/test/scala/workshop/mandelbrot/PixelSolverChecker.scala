@@ -16,14 +16,13 @@ import scala.util.Random
 
 object PixelSolverChecker {
 
-
-  def apply(cmd : Stream[PixelTask], rsp : Stream[PixelResult], cd : ClockDomain): Unit ={
+  def apply(cmd : Stream[PixelTask], rsp : Stream[PixelResult], cd : ClockDomain): Unit = {
     SimTimeout(2000000)
 
     val resX = 64
     val resY = 64
     //Produce cmd stimulus
-    fork{
+    fork {
       val startX = -2.0
       val startY = -1.5
       val endX = 0.8
@@ -75,13 +74,13 @@ object PixelSolverChecker {
       if(error) println("Error, Doesn't match the reference")
 
       //GUI
-      val frame = new JFrame{
+      val frame = new JFrame {
         setPreferredSize(new Dimension(resX*4+16, resY*4+48));
         var closed = false
-        add(new JPanel{
+        add(new JPanel {
           this.setPreferredSize(new Dimension(resX, resY))
           override def paintComponent(g : Graphics) : Unit = {
-            g.drawImage(image, 0, 0, resX*4,resY*4, null)
+            g.drawImage(image, 0, 0, resX*4, resY*4, null)
           }
         })
 
@@ -95,7 +94,7 @@ object PixelSolverChecker {
         });
       }
 
-      while(true){
+      while(true) {
         if(frame.closed) {
           println("simTime : " + simTime())
           if(error) simFailure() else simSuccess()

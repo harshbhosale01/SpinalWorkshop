@@ -1,5 +1,5 @@
 ## Introduction
-The goal of this lab is to pratice with non trivial component parametrization
+The goal of this lab is to practice with non trivial component parametrization
 
 The component to implement is a fully asynchronous APB3 bus decoder,
 

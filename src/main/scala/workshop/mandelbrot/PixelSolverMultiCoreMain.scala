@@ -3,7 +3,7 @@ package workshop.mandelbrot
 import spinal.core._
 
 //Run this main to generate the RTL
-object PixelSolverMultiCoreMain{
+object PixelSolverMultiCoreMain {
   def main(args: Array[String]) {
     SpinalConfig(targetDirectory = "rtl").generateVhdl(
       gen = PixelSolverMultiCore(

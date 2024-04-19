@@ -5,8 +5,8 @@ import spinal.lib._
 
 case class PixelSolverGenerics(fixAmplitude : Int,
                                fixResolution : Int,
-                               iterationLimit : Int){
-  val iterationWidth = log2Up(iterationLimit+1)
+                               iterationLimit : Int) {
+  val iterationWidth = log2Up(iterationLimit + 1)
   def iterationType = UInt(iterationWidth bits)
   def fixType = SFix(
     peak = fixAmplitude exp,
@@ -14,16 +14,16 @@ case class PixelSolverGenerics(fixAmplitude : Int,
   )
 }
 
-case class PixelTask(g : PixelSolverGenerics) extends Bundle{
-  val x,y = g.fixType
+case class PixelTask(g : PixelSolverGenerics) extends Bundle {
+  val x, y = g.fixType
 }
 
-case class PixelResult(g : PixelSolverGenerics) extends Bundle{
+case class PixelResult(g : PixelSolverGenerics) extends Bundle {
   val iteration = g.iterationType
 }
 
-case class PixelSolver(g : PixelSolverGenerics) extends Component{
-  val io = new Bundle{
+case class PixelSolver(g : PixelSolverGenerics) extends Component {
+  val io = new Bundle {
     val cmd = slave  Stream(PixelTask(g))
     val rsp = master Stream(PixelResult(g))
   }

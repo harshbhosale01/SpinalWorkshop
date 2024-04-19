@@ -8,7 +8,7 @@ import workshop.common.WorkshopSimConfig
 import scala.util.Random
 
 //Run this scala test to generate and check that your RTL work correctly
-class BlackBoxAndClockTester extends AnyFunSuite{
+class BlackBoxAndClockTester extends AnyFunSuite {
   var compiled: SimCompiled[MemorySumming] = null
 
   test("compile") {
@@ -21,7 +21,7 @@ class BlackBoxAndClockTester extends AnyFunSuite{
   }
 
   test("testbench") {
-    compiled.doSimUntilVoid(seed = 42){dut =>
+    compiled.doSimUntilVoid(seed = 42) {dut =>
       dut.writeClock.forkStimulus(10)
       dut.sumClock.forkStimulus(7)
       SimTimeout(10000)

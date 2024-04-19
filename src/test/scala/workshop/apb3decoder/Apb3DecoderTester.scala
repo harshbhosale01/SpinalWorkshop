@@ -6,9 +6,9 @@ import spinal.lib.bus.amba3.apb.Apb3Config
 import workshop.common.CocotbRunner
 
 //Run this scala test to generate and check that your RTL work correctly
-class Apb3DecoderTester extends AnyFunSuite{
+class Apb3DecoderTester extends AnyFunSuite {
   test("test") {
-    SpinalConfig(targetDirectory = "rtl").dumpWave(0,"../../../../../waves/Apb3Decoder.vcd").generateVerilog(
+    SpinalConfig(targetDirectory = "rtl").dumpWave(0, "../../../../../waves/Apb3Decoder.vcd").generateVerilog(
       new Apb3Decoder(
         apbConfig = Apb3Config(addressWidth = 16, dataWidth = 32),
         outputsMapping = List(
@@ -20,7 +20,7 @@ class Apb3DecoderTester extends AnyFunSuite{
       )
     )
 
-    assert(CocotbRunner("./src/test/python/workshop/apb3decoder"),"Simulation faild")
+    assert(CocotbRunner("./src/test/python/workshop/apb3decoder"), "Simulation failed")
     println("SUCCESS")
   }
 }

@@ -19,7 +19,7 @@ case class Apb(config: ApbConfig) extends Bundle with IMasterSlave {
   }
 }
 
-case class ApbPwm(apbConfig: ApbConfig,timerWidth : Int) extends Component{
+case class ApbPwm(apbConfig: ApbConfig,timerWidth : Int) extends Component {
   require(apbConfig.dataWidth == 32)
   require(apbConfig.selWidth == 1)
 
@@ -32,7 +32,7 @@ case class ApbPwm(apbConfig: ApbConfig,timerWidth : Int) extends Component{
     //TODO define the PWM logic
   }
   
-  val control = new Area{
+  val control = new Area {
     //TODO define the APB slave logic that will make PWM's registers writable/readable
   }
 }

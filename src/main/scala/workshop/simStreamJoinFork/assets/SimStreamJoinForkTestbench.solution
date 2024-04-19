@@ -15,7 +15,7 @@ object SimStreamJoinForkTestbench {
     val compiled = SimConfig.withWave.compile(new SimStreamJoinForkDut)
 
     //Run the simulation
-    compiled.doSim{dut =>
+    compiled.doSim {dut =>
       //Fork clockdomain stimulus generation and simulation timeouts
       dut.clockDomain.forkStimulus(period = 10)
       SimTimeout(100000*10)

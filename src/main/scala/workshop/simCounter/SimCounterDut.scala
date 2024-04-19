@@ -3,11 +3,11 @@ package workshop.simCounter
 import spinal.core._
 
 
-object SimCounterDut{
+object SimCounterDut {
   var errorId = 0
 }
 
-class SimCounterDut extends Component{
+class SimCounterDut extends Component {
   val io = new Bundle{
     val enable = in Bool()
     val value = out UInt(8 bits)

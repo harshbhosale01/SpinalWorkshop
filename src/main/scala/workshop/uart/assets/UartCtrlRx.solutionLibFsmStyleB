@@ -6,7 +6,7 @@ import spinal.lib.fsm._
 
 case class UartRxGenerics( preSamplingSize: Int = 1,
                            samplingSize: Int = 5,
-                           postSamplingSize: Int = 2){
+                           postSamplingSize: Int = 2) {
 
   val rxdSamplePerBit = preSamplingSize + samplingSize + postSamplingSize
   require(isPow2(rxdSamplePerBit))
@@ -16,9 +16,9 @@ case class UartRxGenerics( preSamplingSize: Int = 1,
 }
 
 
-case class UartCtrlRx(generics : UartRxGenerics) extends Component{
+case class UartCtrlRx(generics : UartRxGenerics) extends Component {
   import generics._   //Allow to directly use generics attribute without generics. prefix
-  val io = new Bundle{
+  val io = new Bundle {
       val rxd  = in Bool
       val samplingTick = in Bool
       val read = master Flow(Bits(8 bits))
@@ -50,7 +50,7 @@ case class UartCtrlRx(generics : UartRxGenerics) extends Component{
         tick := True
       }
     }
-    when(recenter){
+    when(recenter) {
       counter := preSamplingSize + (samplingSize - 1) / 2 - 1
     }
   }
@@ -64,12 +64,12 @@ case class UartCtrlRx(generics : UartRxGenerics) extends Component{
     when(bitTimer.tick) {
       value := value + 1
     }
-    when(clear){
+    when(clear) {
       value := 0
     }
   }
 
-  // Statemachine that use all precedent area
+  // State machine that use all precedent areas
   val stateMachine = new StateMachine {
     val buffer = Reg(io.read.payload)
     io.read.valid := False
@@ -79,20 +79,19 @@ case class UartCtrlRx(generics : UartRxGenerics) extends Component{
     val DATA  = new State
     val STOP  = new State
 
-    IDLE.whenIsActive{
+    IDLE.whenIsActive {
       when(sampler.tick && !sampler.value) {
         bitTimer.recenter := True
         goto(START)
       }
     }
 
-    START.whenIsActive{
+    START.whenIsActive {
       when(bitTimer.tick) {
         bitCounter.clear := True
         goto(DATA)
       }
     }
-
 
     DATA.whenIsActive{
       when(bitTimer.tick) {

@@ -4,18 +4,18 @@ import spinal.lib._
 import spinal.lib.fsm.{EntryPoint, StateParallelFsm, State, StateMachine}
 
 
-case class UdpAppCmd() extends Bundle{
+case class UdpAppCmd() extends Bundle {
   val ip      = Bits(32 bits)
   val srcPort = Bits(16 bits)
   val dstPort = Bits(16 bits)
   val length  = UInt(16 bits)
 }
 
-case class UdpAppBus() extends Bundle with IMasterSlave{
+case class UdpAppBus() extends Bundle with IMasterSlave {
   val cmd = Stream(UdpAppCmd())
   val data = Stream(Fragment(Bits(8 bits)))
 
-  override def asMaster(): Unit = master(cmd,data)
+  override def asMaster(): Unit = master(cmd, data)
 }
 
 object Hello{
@@ -23,8 +23,8 @@ object Hello{
   val discoveringRsp = 0x22
 }
 
-case class UdpApp(helloMessage : String,helloPort : Int = 37984) extends Component{
-  val io = new Bundle{
+case class UdpApp(helloMessage : String,helloPort : Int = 37984) extends Component {
+  val io = new Bundle {
     val rx = slave(UdpAppBus())
     val tx = master(UdpAppBus())
   }
@@ -42,15 +42,15 @@ case class UdpApp(helloMessage : String,helloPort : Int = 37984) extends Compone
   io.tx.data.last := False
   io.tx.data.fragment := 0
 
-  val flushRx = new Area{
-    def apply(): Unit ={
+  val flushRx = new Area {
+    def apply(): Unit = {
       active := True
     }
 
     val active = RegInit(False)
     when(active){
       io.rx.data.ready := True
-      when(io.rx.data.valid && io.rx.data.last){
+      when(io.rx.data.valid && io.rx.data.last) {
         io.rx.cmd.ready := True
         active := False
       }
@@ -58,7 +58,7 @@ case class UdpApp(helloMessage : String,helloPort : Int = 37984) extends Compone
   }
 
 
-  val fsm = new StateMachine{
+  val fsm = new StateMachine {
     val IDLE               = new State with EntryPoint
     val HELLO_HEADER       = new State
     val DISCOVERING_RSP_TX = new StateParallelFsm(
@@ -68,9 +68,9 @@ case class UdpApp(helloMessage : String,helloPort : Int = 37984) extends Compone
 
     //Filter rx dst ports
     IDLE.whenIsActive{
-      when(io.rx.cmd.valid && !flushRx.active){
-        switch(io.rx.cmd.dstPort){
-          is(helloPort){
+      when(io.rx.cmd.valid && !flushRx.active) {
+        switch(io.rx.cmd.dstPort) {
+          is(helloPort) {
             goto(HELLO_HEADER)
           }
           default{
@@ -96,21 +96,19 @@ case class UdpApp(helloMessage : String,helloPort : Int = 37984) extends Compone
     }
 
     //Send an discoveringRsp packet
-    DISCOVERING_RSP_TX.whenCompleted{
+    DISCOVERING_RSP_TX.whenCompleted {
       flushRx()
       goto(IDLE)
     }
   }
 
-  
-
 
   //Inner FSM of the discoveringRspTx state
-  lazy val discoveringRspTxCmdFsm = new StateMachine{
+  lazy val discoveringRspTxCmdFsm = new StateMachine {
     val sendCmd = new State with EntryPoint{
-      whenIsActive{
+      whenIsActive {
         io.tx.cmd.valid := True
-        when(io.tx.cmd.ready){
+        when(io.tx.cmd.ready) {
           exit()
         }
       }
@@ -118,28 +116,28 @@ case class UdpApp(helloMessage : String,helloPort : Int = 37984) extends Compone
   }
 
   //Inner FSM of the discoveringRspTx state
-  lazy val discoveringRspTxDataFsm = new StateMachine{
+  lazy val discoveringRspTxDataFsm = new StateMachine {
     val sendHeader = new State with EntryPoint{
-      whenIsActive{
+      whenIsActive {
         io.tx.data.valid   := True
         io.tx.data.fragment := Hello.discoveringRsp
-        when(io.tx.data.ready){
+        when(io.tx.data.ready) {
           goto(sendMessage)
         }
       }
     }
-    val sendMessage = new State{
+    val sendMessage = new State {
       val counter = Reg(UInt(log2Up(helloMessage.length) bits))
-      onEntry{
+      onEntry {
         counter := 0
       }
-      whenIsActive{
+      whenIsActive {
         io.tx.data.valid    := True
-        io.tx.data.fragment := helloMessage.map(c => B(c.toInt,8 bits)).read(counter)
-        io.tx.data.last := counter === helloMessage.length-1
-        when(io.tx.data.ready){
+        io.tx.data.fragment := helloMessage.map(c => B(c.toInt, 8 bits)).read(counter)
+        io.tx.data.last := counter === helloMessage.length - 1
+        when(io.tx.data.ready) {
           counter := counter + 1
-          when(io.tx.data.last){
+          when(io.tx.data.last) {
             exit()
           }
         }

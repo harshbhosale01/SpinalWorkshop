@@ -20,7 +20,7 @@ class CounterTester extends AnyFunSuite {
     compiled.doSim(seed = 42){dut =>
       dut.clockDomain.forkStimulus(10)
       var counter = 0
-      for(_ <- 0 until 100){
+      for(_ <- 0 until 100) {
         dut.io.clear #= Random.nextDouble() < 0.1
         dut.clockDomain.waitSampling()
         assert(dut.io.value.toInt == counter, "dut.io.value missmatch")

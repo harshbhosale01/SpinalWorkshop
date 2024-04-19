@@ -5,7 +5,7 @@ This lab will be in 2 phases :
 - The implementation of a function which allow to use an memory bus to control that timer
 
 This lab will introduce :
-- How to define an register bank by an abstract way (BusSlaveFactory)
+- How to define an register bank in an abstract way (BusSlaveFactory)
 - Meta-hardware description possibilities
 
 ## Part 1 : Timer
@@ -31,9 +31,9 @@ And also some inputs/outputs :
 Now we can start with the main purpose of this lab => Defining a memory mapping function. To do that we will use two techniques :
 
 - Using the BusSlaveFactory tool
-- Defining a function inside the Timer component which can be called from the parent component to drive Timer's IO by an abstract ways.
+- Defining a function inside the Timer component which can be called from the parent component to drive Timer's IO by an abstract way.
 
-This memory mapping function will take followings parameters :
+This memory mapping function will take following parameters :
 
 | Parameter Name  |  Type  | Description |
 | ------- | ---- | ---- |

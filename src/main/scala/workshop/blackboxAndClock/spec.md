@@ -52,7 +52,7 @@ module Ram_1w_1r_2c #(
 endmodule
 ```
 
-Some documentation about the SpinalHDL blackbox feature are present [here](http://spinalhdl.github.io/SpinalDoc/spinal/core/blackbox/)
+Some documentation about the SpinalHDL blackbox feature are present [here](https://spinalhdl.github.io/SpinalDoc-RTD/master/SpinalHDL/Structuring/blackbox.html)
 
 ## Notes about Clock crossing, not related to this lab
 Clock crossing is something that should be done carefully because you can easily lose transactions or have metastability issues. There is many way to do clock crossing safely :

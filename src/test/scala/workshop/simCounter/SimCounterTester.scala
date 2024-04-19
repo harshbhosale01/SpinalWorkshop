@@ -11,21 +11,21 @@ class SimCounterTester extends AnyFunSuite {
   }
 
   test("catch increment by two") {
-    intercept [Throwable]{
+    intercept [Throwable] {
       SimCounterDut.errorId = 1
       SimCounterTestbench.main(null)
     }
   }
 
   test("catch bad reset") {
-    intercept [Throwable]{
+    intercept [Throwable] {
       SimCounterDut.errorId = 2
       SimCounterTestbench.main(null)
     }
   }
 
   test("catch reversed enable") {
-    intercept [Throwable]{
+    intercept [Throwable] {
       SimCounterDut.errorId = 3
       SimCounterTestbench.main(null)
     }

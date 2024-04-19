@@ -3,12 +3,12 @@ package workshop.simStreamJoinFork
 import spinal.core._
 import spinal.lib._
 
-object SimStreamJoinForkDut{
+object SimStreamJoinForkDut {
   var errorId = 0
 }
 
-class SimStreamJoinForkDut extends Component{
-  val io = new Bundle{
+class SimStreamJoinForkDut extends Component {
+  val io = new Bundle {
     val cmdA = slave Stream(UInt(32 bits))
     val cmdB = slave Stream(UInt(32 bits))
     val rspMul = master Stream(UInt(64 bits))
@@ -20,8 +20,8 @@ class SimStreamJoinForkDut extends Component{
   val cmdBBuffer = io.cmdB.stage()
 
 
-  case class Cmd() extends Bundle{
-    val a,b = UInt(32 bits)
+  case class Cmd() extends Bundle {
+    val a, b = UInt(32 bits)
   }
   val cmdJoin = Stream(Cmd())
 

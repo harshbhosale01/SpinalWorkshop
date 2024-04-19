@@ -1,21 +1,21 @@
 ## Description
-The goal of this lab is to implement an component which implement an UDP application layer. This UDP application will be an server who listen to the port 37984 to return a message when an packet of one byte set to 0x11 is received
+The goal of this lab is to implement a component which implement an UDP application layer. This UDP application will be an server who listen to the port 37984 to return a message when an packet of one byte set to 0x11 is received
 
 This lab will introduce :
 
 - How to use the StateMachine library
-- How to manage statemachine with inner states
+- How to manage state machines with inner states
 - Kind of AXI-like communication layer protocol
 
 ## Bus specification
 Receiving or transmitting UDP frames will be possible via the `UdpAppBus` interface.<br>
 
 ```scala
-case class UdpAppBus() extends Bundle with IMasterSlave{
+case class UdpAppBus() extends Bundle with IMasterSlave {
   val cmd  = Stream(UdpAppCmd())
   val data = Stream(Fragment(Bits(8 bits)))
 
-  override def asMaster(): Unit = master(cmd,data)
+  override def asMaster(): Unit = master(cmd, data)
 }
 ```
 
@@ -24,7 +24,7 @@ The header of each packet will appear as a simple transaction on the `cmd` strea
 The `UdpAppCmd` is constituted as following :
 
 ```scala
-case class UdpAppCmd() extends Bundle{
+case class UdpAppCmd() extends Bundle {
   val ip      = Bits(32 bits)
   val srcPort = Bits(16 bits)
   val dstPort = Bits(16 bits)

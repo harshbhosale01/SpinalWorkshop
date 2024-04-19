@@ -12,10 +12,10 @@ case class Mapping(base : BigInt, range : BigInt){
 }
 
 
-case class Apb3Decoder(apbConfig : Apb3Config, outputsMapping : Seq[Mapping]) extends Component{
+case class Apb3Decoder(apbConfig : Apb3Config, outputsMapping : Seq[Mapping]) extends Component {
   require(apbConfig.selWidth == 1)
 
-  val io = new Bundle{
+  val io = new Bundle {
     val input   = slave(Apb3(apbConfig))
     val outputs = Vec(master(Apb3(apbConfig)), outputsMapping.length)
   }
@@ -31,7 +31,7 @@ case class Apb3Decoder(apbConfig : Apb3Config, outputsMapping : Seq[Mapping]) ex
   val mappingHits = outputsMapping.map(_.hit(io.input.PADDR))
   val mappingHitsIndex = OHToUInt(mappingHits)
 
-  for(i <- 0 until outputsMapping.length){
+  for(i <- 0 until outputsMapping.length) {
     io.outputs(i).PSEL.lsb := mappingHits(i) && io.input.PSEL.lsb
   }
 

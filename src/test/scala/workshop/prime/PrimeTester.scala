@@ -9,7 +9,7 @@ import workshop.counter.Counter
 import scala.util.Random
 
 //Run this scala test to generate and check that your RTL work correctly
-class PrimeTester extends AnyFunSuite{
+class PrimeTester extends AnyFunSuite {
   var compiled: SimCompiled[PrimeUsage] = null
 
   test("compile") {
@@ -17,16 +17,16 @@ class PrimeTester extends AnyFunSuite{
   }
 
   test("testbench") {
-    compiled.doSim(seed = 42){dut =>
+    compiled.doSim(seed = 42) {dut =>
 
       var counter = 0
-      for(_ <- 0 until 100){
+      for(_ <- 0 until 100) {
         val value = dut.io.value.randomizedInt()
         val refIsPrime = Prime(value)
         dut.io.value #= value
         sleep(1)
         val dutIsPrime = dut.io.isPrime.toBoolean
-        assert(dutIsPrime == refIsPrime, s"dut.io.isPrime missmatch. DUT=$dutIsPrime REF=$refIsPrime")
+        assert(dutIsPrime == refIsPrime, s"dut.io.isPrime mismatch. DUT=$dutIsPrime REF=$refIsPrime")
       }
     }
   }

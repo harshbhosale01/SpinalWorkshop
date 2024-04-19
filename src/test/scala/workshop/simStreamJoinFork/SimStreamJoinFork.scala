@@ -10,21 +10,21 @@ class SimStreamJoinFork extends AnyFunSuite {
   }
 
   test("catch bad xor") {
-    intercept [Throwable]{
+    intercept [Throwable] {
       SimStreamJoinForkDut.errorId = 1
       SimStreamJoinForkTestbench.main(null)
     }
   }
 
   test("catch bad mul") {
-    intercept [Throwable]{
+    intercept [Throwable] {
       SimStreamJoinForkDut.errorId = 2
       SimStreamJoinForkTestbench.main(null)
     }
   }
 
   test("catch cmdA transaction vanish") {
-    intercept [Throwable]{
+    intercept [Throwable] {
       SimStreamJoinForkDut.errorId = 3
       SimStreamJoinForkTestbench.main(null)
     }

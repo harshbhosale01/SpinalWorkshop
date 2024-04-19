@@ -4,13 +4,13 @@ import spinal.core._
 import spinal.lib._
 
 
-case class MemoryWrite() extends Bundle{
+case class MemoryWrite() extends Bundle {
   val address = UInt(8 bits)
   val data    = Bits(32 bits)
 }
 
-case class StreamUnit() extends Component{
-  val io = new Bundle{
+case class StreamUnit() extends Component {
+  val io = new Bundle {
     val memWrite = slave  Flow(MemoryWrite())
     val cmdA     = slave  Stream(UInt(8 bits))
     val cmdB     = slave  Stream(Bits(32 bits))
@@ -25,7 +25,7 @@ case class StreamUnit() extends Component{
   )
 
   val memReadStream = mem.streamReadSync(io.cmdA)
-  io.rsp << StreamJoin.arg(memReadStream,io.cmdB).translateWith(memReadStream.payload ^ io.cmdB.payload)
+  io.rsp << StreamJoin.arg(memReadStream, io.cmdB).translateWith(memReadStream.payload ^ io.cmdB.payload)
 
 //  //Alternative solution for the two precedents lines
 //  val memReadStream = io.cmdA.stage()
@@ -33,5 +33,5 @@ case class StreamUnit() extends Component{
 //    enable  = io.cmdA.fire,
 //    address = io.cmdA.payload
 //  )
-//  io.rsp << StreamJoin.arg(memReadStream,io.cmdB).translateWith(memReadData ^ io.cmdB.payload)
+//  io.rsp << StreamJoin.arg(memReadStream, io.cmdB).translateWith(memReadData ^ io.cmdB.payload)
 }

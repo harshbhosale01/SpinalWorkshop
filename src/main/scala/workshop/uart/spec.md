@@ -17,7 +17,7 @@ This lab will introduce :
 
 - State machines
 - valid-payload protocol (Flow)
-- Some utilse of the SpinalLib (History, MajorityVote)
+- Some utils of the SpinalLib (History, MajorityVote)
 
 ## Component interfaces
 

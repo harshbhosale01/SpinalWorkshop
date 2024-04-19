@@ -8,7 +8,7 @@ This lab will introduce :
 - How this arbitration can be describe by an abstract way
 - How to use Memory (Mem)
 
-There is some Stream documentation [there](https://spinalhdl.github.io/SpinalDoc-RTD/SpinalHDL/Libraries/stream.html)
+There is some Stream documentation [there](https://spinalhdl.github.io/SpinalDoc-RTD/master/SpinalHDL/Libraries/stream.html)
 
 ## Specification
 The functionalities to implement is the following :
@@ -19,12 +19,12 @@ The functionalities to implement is the following :
 - Transaction on `cmdA` and `cmdB` could come at any time. You have to stall them when necessary
 - The payload of each `rsp` transaction should be equals to memory(cmdA.payload) xor cmdB.payload
 - The width of `cmdB`/`rsp` payload is 32 bits
-- The memory should be read by an synchronous way
+- The memory should be read in a synchronous way
 
-There is the diagram of the component to implement :<br>
+Here is the diagram of the component to implement :<br>
 ![](assets/StreamUnit.svg)
 
-There is the specification of IO :
+Here is the specification of the IO :
 
 | IO name | direction | type | description |
 | ------ | ----------- | ------ | ------ |
@@ -45,8 +45,8 @@ So, many arbitration utils are available in the SpinalHDL library, and for examp
 //Implement a one cycle delay / buffer
 val delayedStream = myStream.stage()  
 
-//Produce an Stream with transactions when streamA and StreamB have transactinos
-val joinedStreamWithoutPayload = StreamJoin.arg(streamA,streamB)  
+//Produce an Stream with transactions when streamA and StreamB have transactions
+val joinedStreamWithoutPayload = StreamJoin.arg(streamA, streamB)  
 
 //Return a stream with anotherPayload as payload
 val translatedStream = myStream.translateWith(anotherPayload)   
@@ -55,7 +55,7 @@ val translatedStream = myStream.translateWith(anotherPayload)
 val dataStream =  memory.streamReadSync(addressStream)
 ```
 
-There is many other utils documented [there](https://spinalhdl.github.io/SpinalDoc-RTD/SpinalHDL/Libraries/stream.html)
+There is many other utils documented [there](https://spinalhdl.github.io/SpinalDoc-RTD/master/SpinalHDL/Libraries/stream.html#utils)
 
 
 ## Note

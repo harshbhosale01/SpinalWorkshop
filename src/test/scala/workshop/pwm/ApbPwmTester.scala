@@ -67,14 +67,14 @@ class ApbPwmTester extends AnyFunSuite{
 
       def apbReadAssert(address : BigInt, data : BigInt, mask : BigInt, message : String) : Unit =  assert((apbRead(address) & mask) == data, message)
 
-      def checkDutyCycle(value : Int): Unit ={
+      def checkDutyCycle(value : Int): Unit = {
         dut.clockDomain.waitSampling(256*6)
         var highs, toggles = 0
         var last = io("pwm").toBigInt
-        for(_ <- 0 until 256){
+        for(_ <- 0 until 256) {
           dut.clockDomain.waitSampling()
           val pwm = io("pwm").toBigInt
-          if(pwm == 1){
+          if(pwm == 1) {
             highs += 1
           }
           if(last != pwm) toggles += 1
@@ -85,16 +85,16 @@ class ApbPwmTester extends AnyFunSuite{
         assert(toggles == 2, "Wrong PWM signal")
       }
 
-      apbWrite(0x04,0x000000C0);
-      apbWrite(0x00,0x00000001);
+      apbWrite(0x04, 0x000000C0);
+      apbWrite(0x00, 0x00000001);
       checkDutyCycle(0xC0);
-      apbWrite(0x04,0x00000040);
+      apbWrite(0x04, 0x00000040);
       checkDutyCycle(0x40);
-      apbReadAssert(0x00,0x00000001,0x00000001,"APB pwm enable read doesn't work properly.");
-      apbReadAssert(0x04,0x00000040,0x000000FF,"APB duty cycle read doesn't work properly.");
-      apbWrite(0x00,0x00000000);
+      apbReadAssert(0x00, 0x00000001, 0x00000001, "APB pwm enable read doesn't work properly.");
+      apbReadAssert(0x04, 0x00000040, 0x000000FF, "APB duty cycle read doesn't work properly.");
+      apbWrite(0x00, 0x00000000);
 
-      fork{
+      fork {
         val last = io("pwm").toBigInt
         waitUntil(io("pwm").toBigInt != last)
         simFailure("The enable register isn't effective")
