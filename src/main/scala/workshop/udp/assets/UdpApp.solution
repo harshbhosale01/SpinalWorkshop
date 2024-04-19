@@ -58,7 +58,7 @@ case class UdpApp(helloMessage : String, helloPort : Int = 37984) extends Compon
   }
 
   val fsm = new StateMachine {
-    //Filter rx dst ports
+    // Filter rx dst ports
     val idle : State = new State with EntryPoint {
       whenIsActive{
         when(io.rx.cmd.valid && !flushRx.active) {
@@ -74,7 +74,7 @@ case class UdpApp(helloMessage : String, helloPort : Int = 37984) extends Compon
       }
     }
 
-    //Check the hello protocol Header
+    // Check the hello protocol Header
     val helloHeader = new State {
       whenIsActive {
         when(io.rx.data.valid) {
@@ -91,7 +91,7 @@ case class UdpApp(helloMessage : String, helloPort : Int = 37984) extends Compon
       }
     }
 
-    //Send an discoveringRsp packet
+    // Send an discoveringRsp packet
     val discoveringRspTx = new StateParallelFsm(
       discoveringRspTxCmdFsm,
       discoveringRspTxDataFsm
@@ -103,7 +103,7 @@ case class UdpApp(helloMessage : String, helloPort : Int = 37984) extends Compon
     }
   }
 
-  //Inner FSM of the discoveringRspTx state
+  // Inner FSM of the discoveringRspTx state
   lazy val discoveringRspTxCmdFsm = new StateMachine {
     val sendCmd = new State with EntryPoint {
       whenIsActive {
@@ -115,7 +115,7 @@ case class UdpApp(helloMessage : String, helloPort : Int = 37984) extends Compon
     }
   }
 
-  //Inner FSM of the discoveringRspTx state
+  // Inner FSM of the discoveringRspTx state
   lazy val discoveringRspTxDataFsm = new StateMachine {
     val sendHeader = new State with EntryPoint {
       whenIsActive {

@@ -3,7 +3,7 @@ package workshop.common
 import scala.sys.process.{Process, ProcessIO}
 
 
-object CocotbRunner{
+object CocotbRunner {
   def apply(path : String) : Boolean = {
 
     doCmd(Seq(

@@ -37,7 +37,7 @@ The implementation could be done by many way, but the goal of this lab is to pra
 ```scala
 def patternDetector(str : String) = new Area {
   val hit = False 
-  //..
+  // ..
 }
 ```
 
@@ -45,7 +45,7 @@ def patternDetector(str : String) = new Area {
 
 ```scala
 def valueLoader(start : Bool,that : Data) = new Area {
-    //...
+    // ...
 }
 ```
 
@@ -78,7 +78,7 @@ def counter() = new Area {
   value := value + 1
 }
 
-val myCounter = counter()  //All signal inside the function will be named "myCounter_xxx"
+val myCounter = counter()  // All signal inside the function will be named "myCounter_xxx"
 when(myCounter.isZero) {
   //...
 }
@@ -93,8 +93,8 @@ def counterIsZero() = new Area {
   value := value + 1
 }.setName("something").isZero
 
-when(counterIsZero()) {    //All signal inside the function will be named "something_xxx"
-  //...
+when(counterIsZero()) {    // All signal inside the function will be named "something_xxx"
+  // ...
 }
 ```
 
@@ -108,7 +108,7 @@ def counterIsZero(inc : Bool) = new Area {
 }.setPartialName(inc,"counter").isZero
 
 val cond = True
-when(counterIsZero(cond)) {  //All signal inside the function will be named "cond_counter_xxx"
-  //...
+when(counterIsZero(cond)) {  // All signal inside the function will be named "cond_counter_xxx"
+  // ...
 }
 ```

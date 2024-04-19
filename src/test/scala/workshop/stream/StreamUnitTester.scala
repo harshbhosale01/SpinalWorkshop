@@ -9,7 +9,7 @@ import workshop.common.WorkshopSimConfig
 import scala.collection.mutable
 import scala.util.Random
 
-//Run this scala test to generate and check that your RTL work correctly
+// Run this scala test to generate and check that your RTL work correctly
 class StreamUnitTester extends AnyFunSuite {
   var compiled: SimCompiled[StreamUnit] = null
 

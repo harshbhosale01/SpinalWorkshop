@@ -29,5 +29,5 @@ The dut is a stream processing component. It has two command interface which are
 | dut.io.rspMul | master Stream(UInt(64 bits)) | For each pair of cmdA and cmdB transactions, emit a transaction with as payload the cmdA.payload * cmdB.payload |
 | dut.io.rspXor | master Stream(UInt(32 bits)) | Same as rspMul, but with cmdA.payload ^ cmdB.payload as payload|
 
-The latencies from cmdA/cmdB to rspMul/rspXor are at least one cycle (Emiting a transaction on the cmd streams will not create a transaction on the rsp streams the same cycle) 
+The latencies from cmdA/cmdB to rspMul/rspXor are at least one cycle (Emitting a transaction on the cmd streams will not create a transaction on the rsp streams the same cycle) 
 

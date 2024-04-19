@@ -3,7 +3,7 @@ package workshop.apb3decoder
 import spinal.core._
 import spinal.lib.bus.amba3.apb.Apb3Config
 
-//Run this main to generate the RTL
+// Run this main to generate the RTL
 object Apb3DecoderMain{
   def main(args: Array[String]) {
     SpinalConfig(targetDirectory = "rtl").generateVhdl(new Apb3Decoder(

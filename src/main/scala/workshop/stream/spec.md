@@ -42,16 +42,16 @@ Any way, implementing by hand the arbitration is something dangerous because in 
 So, many arbitration utils are available in the SpinalHDL library, and for example, this lab could use following tools :
 
 ```scala
-//Implement a one cycle delay / buffer
+// Implement a one cycle delay / buffer
 val delayedStream = myStream.stage()  
 
-//Produce an Stream with transactions when streamA and StreamB have transactions
+// Produce an Stream with transactions when streamA and StreamB have transactions
 val joinedStreamWithoutPayload = StreamJoin.arg(streamA, streamB)  
 
-//Return a stream with anotherPayload as payload
+// Return a stream with anotherPayload as payload
 val translatedStream = myStream.translateWith(anotherPayload)   
 
-//Read a memory syncronusly using a stream of address to get a stream of data
+// Read a memory syncronusly using a stream of address to get a stream of data
 val dataStream =  memory.streamReadSync(addressStream)
 ```
 

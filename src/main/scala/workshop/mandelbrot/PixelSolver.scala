@@ -28,6 +28,6 @@ case class PixelSolver(g : PixelSolverGenerics) extends Component {
     val rsp = master Stream(PixelResult(g))
   }
 
-  //TODO implement the mandelbrot algorithm
+  // TODO implement the mandelbrot algorithm
 }
 

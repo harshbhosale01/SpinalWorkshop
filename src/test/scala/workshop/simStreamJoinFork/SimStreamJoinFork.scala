@@ -2,7 +2,7 @@ package workshop.simStreamJoinFork
 
 import org.scalatest.funsuite.AnyFunSuite
 
-//Just a simple wrapper for scala test purposes
+// Just a simple wrapper for scala test purposes
 class SimStreamJoinFork extends AnyFunSuite {
   test("pass on bug-free hardware") {
     SimStreamJoinForkDut.errorId = 0

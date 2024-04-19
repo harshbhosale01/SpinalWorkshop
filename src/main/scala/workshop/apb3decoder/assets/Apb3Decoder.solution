@@ -27,7 +27,7 @@ case class Apb3Decoder(apbConfig : Apb3Config, outputsMapping : Seq[Mapping]) ex
     output.PWDATA  := io.input.PWDATA
   }
 
-  //Address decoding
+  // Address decoding
   val mappingHits = outputsMapping.map(_.hit(io.input.PADDR))
   val mappingHitsIndex = OHToUInt(mappingHits)
 

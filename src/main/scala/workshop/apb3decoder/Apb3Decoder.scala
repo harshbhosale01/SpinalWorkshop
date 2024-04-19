@@ -32,6 +32,6 @@ case class Apb3Decoder(apbConfig : Apb3Config, outputsMapping : Seq[Mapping]) ex
     val outputs = Vec(master(Apb3(apbConfig)), outputsMapping.length)
   }
 
-  //TODO fully asynchronous apb3 decoder
+  // TODO fully asynchronous apb3 decoder
 }
 

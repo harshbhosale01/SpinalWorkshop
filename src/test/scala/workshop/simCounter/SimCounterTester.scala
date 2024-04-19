@@ -3,7 +3,7 @@ package workshop.simCounter
 import org.scalatest.funsuite.AnyFunSuite
 import spinal.core._
 
-//Just a simple wrapper for scala test purposes
+// Just a simple wrapper for scala test purposes
 class SimCounterTester extends AnyFunSuite {
   test("pass on bug-free hardware") {
     SimCounterDut.errorId = 0

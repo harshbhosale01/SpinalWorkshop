@@ -5,12 +5,12 @@ import spinal.lib._
 
 
 object Prime{
-  //Pure scala function which return true when the number is prime
+  // Pure scala function which return true when the number is prime
   def apply(n : Int) =  ! ((2 until n-1) exists (n % _ == 0))
 
-  //Should return True when the number is prime.
+  // Should return True when the number is prime.
   def apply(n : UInt) : Bool = {
-    //TODO
+    // TODO
     ???
   }
 }

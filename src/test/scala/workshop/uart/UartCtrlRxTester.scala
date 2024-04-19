@@ -23,7 +23,7 @@ class UartCtrlRxTester extends AnyFunSuite {
       val baudPeriod = 800
       dut.io.rxd #= true
 
-      //Send an uart frame to the DUT
+      // Send an uart frame to the DUT
       def tbToDut(buffer : Int) = {
         dut.io.rxd #= false
         sleep(baudPeriod)
@@ -54,7 +54,7 @@ class UartCtrlRxTester extends AnyFunSuite {
         }
       }
 
-      //Test RXD
+      // Test RXD
       def testTbToDut(data : Int): Unit = {
         sleep(baudPeriod*8)
         assert(readQueue.length == 0, "Uart frame pop from nowhere")

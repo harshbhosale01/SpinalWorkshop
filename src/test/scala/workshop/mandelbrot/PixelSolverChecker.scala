@@ -21,7 +21,7 @@ object PixelSolverChecker {
 
     val resX = 64
     val resY = 64
-    //Produce cmd stimulus
+    // Produce cmd stimulus
     fork {
       val startX = -2.0
       val startY = -1.5
@@ -47,7 +47,7 @@ object PixelSolverChecker {
     StreamReadyRandomizer(rsp, cd)
     val resultArray = Array.ofDim[Int](resY, resY)
 
-    //Monitor the rsp stream
+    // Monitor the rsp stream
     fork{
       val image = new BufferedImage(resX, resY, BufferedImage.TYPE_INT_BGR);
       for (y <- 0 until resY;
@@ -73,7 +73,7 @@ object PixelSolverChecker {
 
       if(error) println("Error, Doesn't match the reference")
 
-      //GUI
+      // GUI
       val frame = new JFrame {
         setPreferredSize(new Dimension(resX*4+16, resY*4+48));
         var closed = false

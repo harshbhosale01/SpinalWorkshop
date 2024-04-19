@@ -18,7 +18,7 @@ case class UdpAppBus() extends Bundle with IMasterSlave {
   override def asMaster(): Unit = master(cmd, data)
 }
 
-object Hello{
+object Hello {
   val discoveringCmd = 0x11
   val discoveringRsp = 0x22
 }
@@ -32,45 +32,45 @@ case class UdpApp(helloMessage : String,helloPort : Int = 37984) extends Compone
   // TODO give default value to rx/tx output pins
 
   val fsm = new StateMachine {
-    //Filter rx dst ports
+    // Filter rx dst ports
     val idle : State = new State with EntryPoint {
       whenIsActive {
         // TODO Check io.rx.cmd dst port
       }
     }
 
-    //Check the hello protocol Header
+    // Check the hello protocol Header
     val helloHeader = new State {
       whenIsActive {
         // TODO check that the first byte of the packet payload is equals to Hello.discoveringCmd
       }
     }
 
-    //Send an discoveringRsp packet
+    // Send an discoveringRsp packet
     val discoveringRspTx = new StateParallelFsm(
       discoveringRspTxCmdFsm,
       discoveringRspTxDataFsm
     ){
       whenCompleted {
-        //TODO return to IDLE
+        // TODO return to IDLE
       }
     }
   }
 
-  //Inner FSM of the discoveringRspTx state
+  // Inner FSM of the discoveringRspTx state
   lazy val discoveringRspTxCmdFsm = new StateMachine {
     val sendCmd = new State with EntryPoint{
       whenIsActive {
-        //TODO send one io.tx.cmd transaction
+        // TODO send one io.tx.cmd transaction
       }
     }
   }
 
-  //Inner FSM of the discoveringRspTx state
+  // Inner FSM of the discoveringRspTx state
   lazy val discoveringRspTxDataFsm = new StateMachine {
-    val sendHeader = new State with EntryPoint{
+    val sendHeader = new State with EntryPoint {
       whenIsActive {
-        //TODO send the io.tx.cmd header (Hello.discoveringRsp)
+        // TODO send the io.tx.cmd header (Hello.discoveringRsp)
       }
     }
 
@@ -80,7 +80,7 @@ case class UdpApp(helloMessage : String,helloPort : Int = 37984) extends Compone
         counter := 0
       }
       whenIsActive {
-        //TODO send the message on io.tx.cmd header
+        // TODO send the message on io.tx.cmd header
       }
     }
   }

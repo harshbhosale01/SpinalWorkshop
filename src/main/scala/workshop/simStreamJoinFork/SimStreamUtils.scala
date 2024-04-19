@@ -5,7 +5,7 @@ import spinal.core.sim._
 import spinal.lib._
 
 object SimStreamUtils {
-  //Fork a thread to constantly randomize the valid/payload signals of the given stream
+  // Fork a thread to constantly randomize the valid/payload signals of the given stream
   def streamMasterRandomizer[T <: Data](stream : Stream[T], clockDomain: ClockDomain): Unit = fork {
     stream.valid #= false
     while(true) {
@@ -15,7 +15,7 @@ object SimStreamUtils {
     }
   }
 
-  //Fork a thread to constantly randomize the ready signal of the given stream
+  // Fork a thread to constantly randomize the ready signal of the given stream
   def streamSlaveRandomizer[T <: Data](stream : Stream[T], clockDomain: ClockDomain): Unit = fork {
     while(true) {
       stream.ready.randomize()
@@ -23,7 +23,7 @@ object SimStreamUtils {
     }
   }
 
-  //Fork a thread which will call the body function each time a transaction is consumed on the given stream
+  // Fork a thread which will call the body function each time a transaction is consumed on the given stream
   def onStreamFire[T <: Data](stream : Stream[T], clockDomain: ClockDomain)(body : => Unit): Unit = fork {
     while(true) {
       clockDomain.waitSampling()

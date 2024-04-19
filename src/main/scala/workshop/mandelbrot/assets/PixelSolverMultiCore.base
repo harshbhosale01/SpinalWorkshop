@@ -20,8 +20,8 @@ case class PixelSolverMultiCore(g : PixelSolverGenerics, coreCount : Int) extend
     val rsp = master Stream (PixelResult(g))
   }
 
-  //TODO instantiate all components
+  // TODO instantiate all components
 
-  //TODO interconnect all that stuff
+  // TODO interconnect all that stuff
 }
 

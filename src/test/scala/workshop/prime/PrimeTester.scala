@@ -8,7 +8,7 @@ import workshop.counter.Counter
 
 import scala.util.Random
 
-//Run this scala test to generate and check that your RTL work correctly
+// Run this scala test to generate and check that your RTL work correctly
 class PrimeTester extends AnyFunSuite {
   var compiled: SimCompiled[PrimeUsage] = null
 

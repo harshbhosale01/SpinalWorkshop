@@ -13,7 +13,7 @@ case class PrimeUsage(width : Int = 8) extends Component{
 }
 
 
-//Run this main to generate the RTL
+// Run this main to generate the RTL
 object PrimeMain{
   def main(args: Array[String]) {
     SpinalConfig(targetDirectory = "rtl").generateVerilog(PrimeUsage(width = 5))

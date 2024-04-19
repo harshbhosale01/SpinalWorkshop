@@ -9,9 +9,9 @@ import workshop.counter.Counter
 import scala.util.Random
 
 
-//IMPORTANT this testbench use hardware signal reflection to avoid compilation issues when the dut isn't implemented
+// IMPORTANT this testbench use hardware signal reflection to avoid compilation issues when the dut isn't implemented
 
-//Run this scala test to generate and check that your RTL work correctly
+// Run this scala test to generate and check that your RTL work correctly
 class ApbPwmTester extends AnyFunSuite{
   var compiled: SimCompiled[ApbPwm] = null
 
@@ -110,30 +110,30 @@ class ApbPwmTester extends AnyFunSuite{
 }
 
 
-//reset <= '1';
-//io_apb_PENABLE <= '0';
-//io_apb_PSEL <= "0";
-//io_apb_PWRITE  <= '-';
-//io_apb_PADDR <= (others => '-');
-//io_apb_PWDATA <= (others => '-');
-//wait for 100 ns;
-//wait until rising_edge(clk);
-//reset <= '0';
-//wait until rising_edge(clk);
-//
-//apbWrite(0x04",0x000000C0");
-//apbWrite(0x00",0x00000001");
-//checkDutyCycle(0xC0");
-//
-//apbWrite(0x04",0x00000040");
-//checkDutyCycle(0x40");
-//
-//apbRead(0x00",0x00000001",0x00000001","APB pwm enable read doesn't work properly.");
-//apbRead(0x04",0x00000040",0x000000FF","APB duty cycle read doesn't work properly.");
-//apbWrite(0x00",0x00000000");
-//
-//wait for 20 us;
-//assert io_pwm'STABLE(10 us)  report "Pwm output change while the enable was low" severity failure;
-//
-//done := done + 1;
-//wait;
+// reset <= '1';
+// io_apb_PENABLE <= '0';
+// io_apb_PSEL <= "0";
+// io_apb_PWRITE  <= '-';
+// io_apb_PADDR <= (others => '-');
+// io_apb_PWDATA <= (others => '-');
+// wait for 100 ns;
+// wait until rising_edge(clk);
+// reset <= '0';
+// wait until rising_edge(clk);
+// 
+// apbWrite(0x04",0x000000C0");
+// apbWrite(0x00",0x00000001");
+// checkDutyCycle(0xC0");
+// 
+// apbWrite(0x04",0x00000040");
+// checkDutyCycle(0x40");
+// 
+// apbRead(0x00",0x00000001",0x00000001","APB pwm enable read doesn't work properly.");
+// apbRead(0x04",0x00000040",0x000000FF","APB duty cycle read doesn't work properly.");
+// apbWrite(0x00",0x00000000");
+// 
+// wait for 20 us;
+// assert io_pwm'STABLE(10 us)  report "Pwm output change while the enable was low" severity failure;
+// 
+// done := done + 1;
+// wait;

@@ -15,7 +15,7 @@ case class UartRxGenerics( preSamplingSize: Int = 1,
 }
 
 case class UartCtrlRx(generics : UartRxGenerics) extends Component{
-  import generics._  //Allow to directly use generics attribute without generics. prefix
+  import generics._  // Allow to directly use generics attribute without generics. prefix
   val io = new Bundle{
     val rxd  = in Bool()
     val samplingTick = in Bool()
@@ -68,6 +68,6 @@ case class UartCtrlRx(generics : UartRxGenerics) extends Component{
 
   // Statemachine that use all precedent area
   val stateMachine = new Area {
-    //TODO state machine
+    // TODO state machine
   }
 }

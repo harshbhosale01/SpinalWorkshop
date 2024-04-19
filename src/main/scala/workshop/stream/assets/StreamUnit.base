@@ -18,5 +18,5 @@ case class StreamUnit() extends Component {
   }
 
   val mem = Mem(Bits(32 bits), 1 << 8)
-  //TODO
+  // TODO
 }

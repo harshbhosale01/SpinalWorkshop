@@ -30,21 +30,21 @@ case class PixelSolver(g : PixelSolverGenerics) extends Component {
 
   import g._
 
-  //Define states
+  // Define states
   val x, y      = Reg(fixType) init(0)
   val iteration = Reg(iterationType) init(0)
 
-  //Do some shared calculation
+  // Do some shared calculation
   val xx = x*x
   val yy = y*y
   val xy = x*y
 
-  //Apply default assignment
+  // Apply default assignment
   io.cmd.ready := False
   io.rsp.valid := False
   io.rsp.iteration := iteration
 
-  //Is the Mandelbrot iteration done ?
+  // Is the Mandelbrot iteration done ?
   when(io.cmd.valid) {
     when(xx + yy >= 4.0 || iteration === iterationLimit) {
       io.rsp.valid := True

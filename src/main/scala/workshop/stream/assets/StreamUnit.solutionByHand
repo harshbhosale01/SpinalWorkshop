@@ -25,17 +25,17 @@ case class StreamUnit() extends Component {
   )
 
   //*******  MemReadStage **************
-  //MemReadStage declarations
+  // MemReadStage declarations
   val memReadValid = RegInit(False)
   val memReadReady = Bool
 
-  //MemReadStage handshake
+  // MemReadStage handshake
   io.cmdA.ready := !memReadValid || memReadReady
   when(io.cmdA.ready) {
     memReadValid := io.cmdA.valid
   }
 
-  //MemReadStage memory access
+  // MemReadStage memory access
   val memReadData = mem.readSync(
     enable = io.cmdA.fire,
     address = io.cmdA.payload

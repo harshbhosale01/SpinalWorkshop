@@ -66,7 +66,7 @@ case class UdpApp(helloMessage : String,helloPort : Int = 37984) extends Compone
       discoveringRspTxDataFsm
     )
 
-    //Filter rx dst ports
+    // Filter rx dst ports
     IDLE.whenIsActive{
       when(io.rx.cmd.valid && !flushRx.active) {
         switch(io.rx.cmd.dstPort) {
@@ -80,7 +80,7 @@ case class UdpApp(helloMessage : String,helloPort : Int = 37984) extends Compone
       }
     }
 
-    //Check the hello protocol Header
+    // Check the hello protocol Header
     HELLO_HEADER.whenIsActive {
       when(io.rx.data.valid) {
         switch(io.rx.data.fragment) {
@@ -95,7 +95,7 @@ case class UdpApp(helloMessage : String,helloPort : Int = 37984) extends Compone
       }
     }
 
-    //Send an discoveringRsp packet
+    // Send an discoveringRsp packet
     DISCOVERING_RSP_TX.whenCompleted {
       flushRx()
       goto(IDLE)
@@ -103,7 +103,7 @@ case class UdpApp(helloMessage : String,helloPort : Int = 37984) extends Compone
   }
 
 
-  //Inner FSM of the discoveringRspTx state
+  // Inner FSM of the discoveringRspTx state
   lazy val discoveringRspTxCmdFsm = new StateMachine {
     val sendCmd = new State with EntryPoint{
       whenIsActive {
@@ -115,7 +115,7 @@ case class UdpApp(helloMessage : String,helloPort : Int = 37984) extends Compone
     }
   }
 
-  //Inner FSM of the discoveringRspTx state
+  // Inner FSM of the discoveringRspTx state
   lazy val discoveringRspTxDataFsm = new StateMachine {
     val sendHeader = new State with EntryPoint{
       whenIsActive {

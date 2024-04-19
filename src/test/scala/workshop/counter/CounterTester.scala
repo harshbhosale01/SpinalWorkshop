@@ -8,7 +8,7 @@ import workshop.common.WorkshopSimConfig
 import scala.sys.process._
 import scala.util.Random
 
-//Run this scala test to generate and check that your RTL work correctly
+// Run this scala test to generate and check that your RTL work correctly
 class CounterTester extends AnyFunSuite {
   var compiled: SimCompiled[Counter] = null
 
