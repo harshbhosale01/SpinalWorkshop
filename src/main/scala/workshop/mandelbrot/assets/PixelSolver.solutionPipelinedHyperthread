@@ -5,8 +5,8 @@ import spinal.lib._
 
 case class PixelSolverGenerics(fixAmplitude : Int,
                                fixResolution : Int,
-                               iterationLimit : Int){
-  val iterationWidth = log2Up(iterationLimit+1)
+                               iterationLimit : Int) {
+  val iterationWidth = log2Up(iterationLimit + 1)
   def iterationType = UInt(iterationWidth bits)
   def fixType = SFix(
     peak = fixAmplitude exp,
@@ -14,17 +14,15 @@ case class PixelSolverGenerics(fixAmplitude : Int,
   )
 }
 
-case class PixelTask(g : PixelSolverGenerics) extends Bundle{
-  val x,y = g.fixType
+case class PixelTask(g : PixelSolverGenerics) extends Bundle {
+  val x, y = g.fixType
 }
 
-case class PixelResult(g : PixelSolverGenerics) extends Bundle{
+case class PixelResult(g : PixelSolverGenerics) extends Bundle {
   val iteration = g.iterationType
 }
 
-
-
-case class PixelSolver(g : PixelSolverGenerics) extends Component{
+case class PixelSolver(g : PixelSolverGenerics) extends Component {
   val io = new Bundle{
     val cmd = slave  Stream(PixelTask(g))
     val rsp = master Stream(PixelResult(g))
@@ -33,32 +31,32 @@ case class PixelSolver(g : PixelSolverGenerics) extends Component{
   import g._
 
   val idWidth = 3
-  class Context extends Bundle{
+  class Context extends Bundle {
     val id        = UInt(idWidth bits)
-    val x0,y0     = fixType
+    val x0, y0    = fixType
     val iteration = UInt(iterationWidth bits)
     val done      = Bool
   }
 
-  case class InserterContext() extends Context{
-    val x,y = fixType
+  case class InserterContext() extends Context {
+    val x, y = fixType
   }
 
-  case class MulStageContext() extends Context{
-    val xx,yy,xy = fixType
+  case class MulStageContext() extends Context {
+    val xx, yy, xy = fixType
   }
 
-  case class AddStageContext() extends Context{
-    val x,y = fixType
+  case class AddStageContext() extends Context {
+    val x, y = fixType
   }
 
-  case class RouterContext() extends Context{
-    val x,y = fixType
+  case class RouterContext() extends Context {
+    val x, y = fixType
   }
 
-  val inserter = new Area{
+  val inserter = new Area {
     val loopback = Flow(RouterContext())
-    val freeId = Counter(1 << idWidth,inc = io.cmd.fire)
+    val freeId = Counter(1 << idWidth, inc = io.cmd.fire)
     val cmdContext = InserterContext()
     cmdContext.id := freeId
     cmdContext.x0 := io.cmd.x
@@ -70,7 +68,7 @@ case class PixelSolver(g : PixelSolverGenerics) extends Component{
 
     val output = Flow(InserterContext())
     output.valid := io.cmd.valid || loopback.valid
-    when(loopback.valid){
+    when(loopback.valid) {
       output.payload.assignSomeByName(loopback.payload)
     } otherwise {
       output.payload.assignSomeByName(cmdContext)
@@ -78,7 +76,7 @@ case class PixelSolver(g : PixelSolverGenerics) extends Component{
     io.cmd.ready := !loopback.valid
   }
 
-  val mulStage = new Area{
+  val mulStage = new Area {
     val input = inserter.output.stage()
     val output = Flow(MulStageContext())
     output.valid := input.valid
@@ -88,7 +86,7 @@ case class PixelSolver(g : PixelSolverGenerics) extends Component{
     output.xy := (input.x * input.y).truncated
   }
 
-  val addStage = new Area{
+  val addStage = new Area {
     val input = mulStage.output.stage().stage()
     val output = Flow(AddStageContext())
     output.valid := input.valid
@@ -102,9 +100,9 @@ case class PixelSolver(g : PixelSolverGenerics) extends Component{
   }
 
 
-  val router = new Area{
+  val router = new Area {
     val input = addStage.output.stage()
-    val wantedId = Counter(1 << idWidth,inc = io.rsp.fire)
+    val wantedId = Counter(1 << idWidth, inc = io.rsp.fire)
 
     io.rsp.valid := input.valid && input.done && wantedId === input.id
     io.rsp.iteration := input.iteration

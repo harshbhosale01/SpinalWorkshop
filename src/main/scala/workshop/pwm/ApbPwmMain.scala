@@ -3,7 +3,7 @@ package workshop.pwm
 import spinal.core._
 
 
-//Run this main to generate the RTL
+// Run this main to generate the RTL
 object ApbPwmMain{
   def main(args: Array[String]) {
     SpinalConfig(targetDirectory = "rtl").generateVhdl(

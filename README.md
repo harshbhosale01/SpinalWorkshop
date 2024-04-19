@@ -67,7 +67,7 @@ Or in a single (But slower) command :
 sbt "testOnly *.CounterTester"
 ```
 
-Note : Each tester regenerate the hardware, you don't need to do it manualy.
+Note : Each tester regenerate the hardware, you don't need to do it manually.
 
 All simulation waves files will be written in root_of_this_repository/waves in the VCD format.
 

@@ -9,12 +9,12 @@ import workshop.common.WorkshopSimConfig
 import scala.collection.mutable
 import scala.util.Random
 
-//Run this scala test to generate and check that your RTL work correctly
-class StreamUnitTester extends AnyFunSuite{
+// Run this scala test to generate and check that your RTL work correctly
+class StreamUnitTester extends AnyFunSuite {
   var compiled: SimCompiled[StreamUnit] = null
 
   test("compile") {
-    compiled = WorkshopSimConfig().compile{
+    compiled = WorkshopSimConfig().compile {
       val c = StreamUnit()
       c.mem.simPublic()
       c
@@ -22,7 +22,7 @@ class StreamUnitTester extends AnyFunSuite{
   }
 
   test("testbench") {
-    compiled.doSimUntilVoid(seed = 42){dut =>
+    compiled.doSimUntilVoid(seed = 42) {dut =>
       dut.clockDomain.forkStimulus(10)
       SimTimeout(10*5000)
 
@@ -49,7 +49,7 @@ class StreamUnitTester extends AnyFunSuite{
         if(rspCounter == 100) simSuccess()
       }
 
-      for(i <- 0 to 255){
+      for(i <- 0 to 255) {
         dut.io.memWrite.valid #= true
         dut.io.memWrite.address #= i
         dut.io.memWrite.data #= ramContent(i)

@@ -1,7 +1,7 @@
 ## Introduction
-To goal of this lab is to have more practice with Area and BusSlaveFactory. Especialy to get a better understand about how you can define Area as a proper class and reuse it later.
+To goal of this lab is to have more practice with Area and BusSlaveFactory. Especially to get a better understanding about how you can define Area as a proper class and reuse it later.
 
-The component to implement is an wave generator with an preloaded sinus wave. This component will also have an AxiLite4 interface to access its registers.
+The component to implement is a wave generator with a preloaded sinus wave. This component will also have an AxiLite4 interface to access its registers.
 
 ![](assets/AxiLite4WavePlayer.png)
 
@@ -16,27 +16,27 @@ The component to implement is an wave generator with an preloaded sinus wave. Th
 
 ## Component interfaces
 
-| name | direction | type | description |
-| ------ | ----------- | ------ | ------ |
-| axiLite | slave | AxiLite4 | Bus used to access the component's registers |
-| wave | out | UInt(sampleWidth bits) | Wave output |
+| name    | direction   | type                   | description                                  |
+| ------- | ----------- | ---------------------- | -------------------------------------------- |
+| axiLite | slave       | AxiLite4               | Bus used to access the component's registers |
+| wave    | out         | UInt(sampleWidth bits) | Wave output                                  |
 
 ## Register mapping
 
-| name | type | address |  description |
-| ------ | ------ | ----------- | ------ |
-| wavePlayer.phase.run     | Bool                       | R/W | 0x00 | When set, the `phase` value will increment by `rate` each cycle|
-| wavePlayer.phase.rate    | UInt(phaseWidth bits)      | W   | 0x04 | Value that should be added the the phase value each cycle when run is enable |
-| wavePlayer.phase.value   | UInt(phaseWidth bits)      | R   | 0x08 | Phase value |
-| wavePlayer.filter.bypass | Bool                       | R/W | 0x10 | When set, the filter output value is directly set from the rom sampler value |
-| wavePlayer.filter.coef   | UInt(filterCoefWidth bits) | W   | 0x14 | First order filter coefficient, formated as an unsigned fixed point Q0.filterCoefWidth |
+| name                     | type                       | dir | addr | description                                                                             |
+| -------------------------| -------------------------- | --- | ---- | --------------------------------------------------------------------------------------- |
+| wavePlayer.phase.run     | Bool                       | R/W | 0x00 | When set, the `phase` value will increment by `rate` each cycle                         |
+| wavePlayer.phase.rate    | UInt(phaseWidth bits)      | W   | 0x04 | Value that should be added the the phase value each cycle when run is enable            |
+| wavePlayer.phase.value   | UInt(phaseWidth bits)      | R   | 0x08 | Phase value                                                                             |
+| wavePlayer.filter.bypass | Bool                       | R/W | 0x10 | When set, the filter output value is directly set from the ROM sampler value            |
+| wavePlayer.filter.coef   | UInt(filterCoefWidth bits) | W   | 0x14 | First order filter coefficient, formatted as an unsigned fixed point Q0.filterCoefWidth |
 
 ## Sampler
 
 There is multiples syntaxes to define a ROM in SpinalHDL, on of them is :
 
 ```scala
-val romSamples = for(sampleId <- 0 until sampleCount) yield{
+val romSamples = for(sampleId <- 0 until sampleCount) yield {
   BigInt(sampleId*sampleId)
 }
 //Will define a rom of 16 words : (0, 1, 4, 9, 16, 25 , ...)

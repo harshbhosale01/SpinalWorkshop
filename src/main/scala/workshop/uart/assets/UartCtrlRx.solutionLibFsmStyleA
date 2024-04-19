@@ -6,7 +6,7 @@ import spinal.lib.fsm._
 
 case class UartRxGenerics( preSamplingSize: Int = 1,
                            samplingSize: Int = 5,
-                           postSamplingSize: Int = 2){
+                           postSamplingSize: Int = 2) {
 
   val rxdSamplePerBit = preSamplingSize + samplingSize + postSamplingSize
   require(isPow2(rxdSamplePerBit))
@@ -16,8 +16,8 @@ case class UartRxGenerics( preSamplingSize: Int = 1,
 }
 
 
-case class UartCtrlRx(generics : UartRxGenerics) extends Component{
-  import generics._   //Allow to directly use generics attribute without generics. prefix
+case class UartCtrlRx(generics : UartRxGenerics) extends Component {
+  import generics._   // Allow to directly use generics attribute without generics. prefix
   val io = new Bundle{
       val rxd  = in Bool
       val samplingTick = in Bool
@@ -50,7 +50,7 @@ case class UartCtrlRx(generics : UartRxGenerics) extends Component{
         tick := True
       }
     }
-    when(recenter){
+    when(recenter) {
       counter := preSamplingSize + (samplingSize - 1) / 2 - 1
     }
   }
@@ -64,25 +64,25 @@ case class UartCtrlRx(generics : UartRxGenerics) extends Component{
     when(bitTimer.tick) {
       value := value + 1
     }
-    when(clear){
+    when(clear) {
       value := 0
     }
   }
 
-  // Statemachine that use all precedent area
+  // State machine that use all precedent areas
   val stateMachine = new StateMachine {
     val buffer = Reg(io.read.payload)
     io.read.valid := False
-    val IDLE : State = new State with EntryPoint{
-      whenIsActive{
+    val IDLE : State = new State with EntryPoint {
+      whenIsActive {
         when(sampler.tick && !sampler.value) {
           bitTimer.recenter := True
           goto(START)
         }
       }
     }
-    val START = new State{
-      whenIsActive{
+    val START = new State {
+      whenIsActive {
         when(bitTimer.tick) {
           bitCounter.clear := True
           goto(DATA)
@@ -90,8 +90,8 @@ case class UartCtrlRx(generics : UartRxGenerics) extends Component{
       }
     }
 
-    val DATA = new State{
-      whenIsActive{
+    val DATA = new State {
+      whenIsActive {
         when(bitTimer.tick) {
           buffer(bitCounter.value) := sampler.value
           when(bitCounter.value === 7) {

@@ -6,7 +6,7 @@ import spinal.core.sim._
 import workshop.common.WorkshopSimConfig
 import workshop.pwm.{ApbConfig, ApbPwm}
 
-//Run this scala test to generate and check that your RTL work correctly
+// Run this scala test to generate and check that your RTL work correctly
 class TimerTester extends AnyFunSuite {
   var compiled: SimCompiled[Timer] = null
 

@@ -64,4 +64,4 @@ module PrimeUsage (
 endmodule
 ```
 
-So basically, you can use a scala for loop to "inline" as many SpinalHDL "when" statements as you want, which can result in the above netlist.
+So basically, you can use a scala for loop to "inline" as many SpinalHDL `when` statements as you want, which can result in the above netlist.

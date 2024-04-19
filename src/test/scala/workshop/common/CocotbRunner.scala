@@ -3,7 +3,7 @@ package workshop.common
 import scala.sys.process.{Process, ProcessIO}
 
 
-object CocotbRunner{
+object CocotbRunner {
   def apply(path : String) : Boolean = {
 
     doCmd(Seq(
@@ -15,8 +15,8 @@ object CocotbRunner{
   }
 
 
-  def doCmd(cmds : Seq[String]): Unit ={
-    var out,err : String = null
+  def doCmd(cmds : Seq[String]): Unit = {
+    var out, err : String = null
     val io = new ProcessIO(
       stdin  => {
         for(cmd <- cmds)
@@ -40,7 +40,7 @@ object CocotbRunner{
   def getCocotbPass(path : String) : Boolean = {
     import scala.io.Source
     for(line <- Source.fromFile(path + "/results.xml").getLines()) {
-      if (line.contains("failure") || line.contains("skipped")){
+      if (line.contains("failure") || line.contains("skipped")) {
         return false
       }
     }

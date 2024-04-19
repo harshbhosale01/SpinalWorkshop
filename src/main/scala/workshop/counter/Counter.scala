@@ -9,5 +9,5 @@ case class Counter(width: Int) extends Component {
     val full     = out Bool()
   }
 
-  //TODO define the logic
+  // TODO define the logic
 }

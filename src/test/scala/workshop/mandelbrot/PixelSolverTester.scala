@@ -5,8 +5,8 @@ import spinal.core._
 import spinal.core.sim._
 import workshop.common.WorkshopSimConfig
 
-//Run this scala test to generate and check that your RTL work correctly
-class PixelSolverTester extends AnyFunSuite{
+// Run this scala test to generate and check that your RTL work correctly
+class PixelSolverTester extends AnyFunSuite {
   var compiled: SimCompiled[PixelSolver] = null
 
   test("compile") {
@@ -22,7 +22,7 @@ class PixelSolverTester extends AnyFunSuite{
   }
 
   test("testbench") {
-    compiled.doSimUntilVoid(seed = 42){dut =>
+    compiled.doSimUntilVoid(seed = 42) {dut =>
       dut.clockDomain.forkStimulus(10)
       PixelSolverChecker(dut.io.cmd, dut.io.rsp, dut.clockDomain)
     }

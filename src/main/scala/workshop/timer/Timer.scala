@@ -15,9 +15,9 @@ case class Timer(width : Int) extends Component {
     val value = out UInt (width bits)
   }
 
-  //TODO phase 1
+  // TODO phase 1
 
   def driveFrom(busCtrl : BusSlaveFactory,baseAddress : BigInt)(ticks : Seq[Bool],clears : Seq[Bool]) = new Area {
-    //TODO phase 2
+    // TODO phase 2
   }
 }

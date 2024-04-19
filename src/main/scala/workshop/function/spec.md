@@ -35,17 +35,17 @@ The implementation could be done by many way, but the goal of this lab is to pra
 1) Define a function which is able to recognise a string pattern on the `cmd` port and which set the `hit` signal to True when that happen.
 
 ```scala
-def patternDetector(str : String) = new Area{
+def patternDetector(str : String) = new Area {
   val hit = False 
-  //..
+  // ..
 }
 ```
 
 2) Define a function which drive a given `Data` from a register buffer and load that register buffer chunk by chunk from the `cmd` port after an `start` pulse :
 
 ```scala
-def valueLoader(start : Bool,that : Data) = new Area{
-    //...
+def valueLoader(start : Bool,that : Data) = new Area {
+    // ...
 }
 ```
 
@@ -53,13 +53,13 @@ Then those both function could be used to build the wanted functionality :
 
 ```scala
   val setA    = patternDetector("setValueA")
-  val loadA   = valueLoader(setA.hit,io.valueA)
+  val loadA   = valueLoader(setA.hit, io.valueA)
 
   val setB    = patternDetector("setValueB")
-  val loadB   = valueLoader(setB.hit,io.valueB)
+  val loadB   = valueLoader(setB.hit, io.valueB)
 
   val setC    = patternDetector("setValueC")
-  val loadC   = valueLoader(setC.hit,io.valueC)
+  val loadC   = valueLoader(setC.hit, io.valueC)
 
 ```
 
@@ -72,14 +72,14 @@ But there is some solutions :
 1) The function could return an Area which then will be kept in the Component (this is the solution retained in the 'Implementation' chapter) :
 
 ```scala
-def counter() = new Area{
+def counter() = new Area {
   val value = Reg(UInt(8 bits)) init(0)
   val isZero = value === 0
   value := value + 1
 }
 
-val myCounter = counter()  //All signal inside the function will be named "myCounter_xxx"
-when(myCounter.isZero){
+val myCounter = counter()  // All signal inside the function will be named "myCounter_xxx"
+when(myCounter.isZero) {
   //...
 }
 ```
@@ -87,28 +87,28 @@ when(myCounter.isZero){
 2) The function could implement an Area that you directly name in the function before returning what you want :
 
 ```scala
-def counterIsZero() = new Area{
+def counterIsZero() = new Area {
   val value = Reg(UInt(8 bits)) init(0)
   val isZero = value === 0
   value := value + 1
 }.setName("something").isZero
 
-when(counterIsZero()){    //All signal inside the function will be named "something_xxx"
-  //...
+when(counterIsZero()) {    // All signal inside the function will be named "something_xxx"
+  // ...
 }
 ```
 
 3) Same as 2) but you use an signal name as prefix :
 
 ```scala
-def counterIsZero(inc : Bool) = new Area{
+def counterIsZero(inc : Bool) = new Area {
   val value = Reg(UInt(8 bits)) init(0)
   val isZero = value === 0
-  when(inc){value := value + 1}
+  when(inc) {value := value + 1}
 }.setPartialName(inc,"counter").isZero
 
 val cond = True
-when(counterIsZero(cond)){  //All signal inside the function will be named "cond_counter_xxx"
-  //...
+when(counterIsZero(cond)) {  // All signal inside the function will be named "cond_counter_xxx"
+  // ...
 }
 ```

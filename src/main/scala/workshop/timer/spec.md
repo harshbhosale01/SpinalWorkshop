@@ -5,7 +5,7 @@ This lab will be in 2 phases :
 - The implementation of a function which allow to use an memory bus to control that timer
 
 This lab will introduce :
-- How to define an register bank by an abstract way (BusSlaveFactory)
+- How to define an register bank in an abstract way (BusSlaveFactory)
 - Meta-hardware description possibilities
 
 ## Part 1 : Timer
@@ -31,9 +31,9 @@ And also some inputs/outputs :
 Now we can start with the main purpose of this lab => Defining a memory mapping function. To do that we will use two techniques :
 
 - Using the BusSlaveFactory tool
-- Defining a function inside the Timer component which can be called from the parent component to drive Timer's IO by an abstract ways.
+- Defining a function inside the Timer component which can be called from the parent component to drive Timer's IO by an abstract way.
 
-This memory mapping function will take followings parameters :
+This memory mapping function will take following parameters :
 
 | Parameter Name  |  Type  | Description |
 | ------- | ---- | ---- |
@@ -46,15 +46,15 @@ The register mapping will make the assumption that the bus system is 32 bits wid
 
 | Register Name | Access | Width | Address offset | Bit offset |  Description |
 | ------- | ---- | --- | --- | --- | --- |
-| ticksEnable | RW | len(ticks) | 0 | 0 | Each ticks bool can be actived if the corresponding ticksEnable bit is high. |
-| clearsEnable | RW | len(clears) | 0 | 16 | Each clears bool can be actived if the corresponding clearsEnable bit is high. |
+| ticksEnable | RW | len(ticks) | 0 | 0 | Each ticks bool can be activated if the corresponding ticksEnable bit is high. |
+| clearsEnable | RW | len(clears) | 0 | 16 | Each clears bool can be activated if the corresponding clearsEnable bit is high. |
 | limit | RW | width | 4  | 0 | Access the limit value of the timer component.<br> When this register is written, the timer is cleared. |
 | value | R | width | 8  | 0 | Access the value of the timer. |
 | clear | W | - | 8  | - | When this register is written, it clear the timer. |
 
 Note : You can see an usage of this memory mapping function in Apb3Timer
 
-There is a list of some usefull function of the BusSlaveFactory :
+There is a list of some useful function of the BusSlaveFactory :
 
 | Function  |  Description |
 | ------- | ---- | 

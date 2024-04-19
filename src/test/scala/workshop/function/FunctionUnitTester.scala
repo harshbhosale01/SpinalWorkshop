@@ -7,8 +7,8 @@ import workshop.common.WorkshopSimConfig
 
 import scala.util.Random
 
-//Run this scala test to generate and check that your RTL work correctly
-class FunctionUnitTester extends AnyFunSuite{
+// Run this scala test to generate and check that your RTL work correctly
+class FunctionUnitTester extends AnyFunSuite {
   var compiled: SimCompiled[FunctionUnit] = null
 
   test("compile") {
@@ -16,7 +16,7 @@ class FunctionUnitTester extends AnyFunSuite{
   }
 
   test("testbench") {
-    compiled.doSim(seed = 42){dut =>
+    compiled.doSim(seed = 42) {dut =>
       dut.clockDomain.forkStimulus(10)
       dut.io.cmd.valid #= false
 

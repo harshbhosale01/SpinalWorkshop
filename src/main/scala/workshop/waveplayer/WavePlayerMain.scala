@@ -2,7 +2,7 @@ package workshop.waveplayer
 
 import spinal.core._
 
-object AxiLite4WavePlayerMain{
+object AxiLite4WavePlayerMain {
   def main(args: Array[String]): Unit = {
     SpinalConfig(targetDirectory = "rtl").generateVerilog(
       gen = new AxiLite4WavePlayer(

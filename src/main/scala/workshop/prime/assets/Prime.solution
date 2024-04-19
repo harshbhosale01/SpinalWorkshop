@@ -25,9 +25,9 @@ object Prime{
   //Explicit traditional programming style
   def apply3(n : UInt) : Bool = {
     val nIsPrime = False
-    for(i <- (0 until 1 << widthOf(n))){
-      if(Prime(i)){ //Behave like a VHDL if generate
-        when(n === i){ //Real hardware statement
+    for(i <- (0 until 1 << widthOf(n))) {
+      if(Prime(i)) { //Behave like a VHDL if generate
+        when(n === i) { //Real hardware statement
           nIsPrime := True
         }
       }
@@ -39,12 +39,12 @@ object Prime{
   def apply4(n : UInt) : Bool = {
     val nIsPrime = False
     val primes = ArrayBuffer[Int]()
-    for(i <- (0 until 1 << widthOf(n))){
+    for(i <- (0 until 1 << widthOf(n))) {
       if(Prime(i)) primes += i
     }
     println(primes.mkString(",")) //Observe primes values for debug
-    for(value <- primes){
-      when(n === value){ //Real hardware statement
+    for(value <- primes) {
+      when(n === value) { //Real hardware statement
         nIsPrime := True
       }
     }
