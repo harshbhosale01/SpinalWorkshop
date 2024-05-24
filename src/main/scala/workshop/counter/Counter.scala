@@ -8,6 +8,15 @@ case class Counter(width: Int) extends Component {
     val value    = out UInt(width bits)
     val full     = out Bool()
   }
+  
+  val counter = Reg(UInt(width bits)) init (0)
 
-  // TODO define the logic
+  when(io.clear) {
+    counter := 0
+  } otherwise {
+    counter := counter + 1
+  }
+  io.value := counter
+  io.full  := counter === counter.maxValue
+  
 }
